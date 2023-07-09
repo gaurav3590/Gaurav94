@@ -1,0 +1,164 @@
+// Simple linklist
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+    int data;
+    struct node *next;
+};
+struct node *head = NULL;
+void print()
+{
+    struct node *ptr = head;
+    if (head == NULL)
+        printf("Underflow.....");
+
+    else
+    {
+        while (ptr != NULL)
+        {
+            printf("%d ", ptr->data);
+            ptr = ptr->next;
+        }
+    }
+    printf("\n");
+}
+void insertEnd(int val)
+{
+    struct node *ptr = head;
+    struct node *temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = val;
+    temp->next = NULL;
+
+    if (head == NULL)
+    {
+        head = temp;
+        return;
+    }
+
+    while (ptr->next != NULL)
+        ptr = ptr->next;
+    ptr->next = temp;
+    return;
+}
+void deleteEnd()
+{
+    struct node *ptr;
+    struct node *prev;
+    if (head == NULL)
+        printf("Already Empty....\n");
+    else if (head->next == NULL)
+    {
+        head = NULL;
+        free(head);
+    }
+    else
+    {
+        ptr = head;
+        while (ptr->next != NULL)
+        {
+            prev = ptr;
+            ptr = ptr->next;
+        }
+        prev->next = NULL;
+        free(ptr);
+    }
+}
+
+int main()
+{
+     insertEnd(10);
+     insertEnd(20);
+    insertEnd(30);
+    insertEnd(40);
+    insertEnd(50);
+    insertEnd(500);
+    print();
+    deleteEnd();
+    deleteEnd();
+    deleteEnd();
+    deleteEnd();
+    deleteEnd();
+    deleteEnd();
+    deleteEnd();
+    // print();
+}
+
+
+
+// Linear search
+#include <stdio.h>
+#include <stdlib.h>
+#define n 10
+int linearSearch(int a[], int x)
+{
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        if (x == a[i])
+            return i + 1;
+    }
+    return -1;
+}
+int main()
+{
+    int a[n], i, c;
+    for (i = 0; i < n; i++)
+        a[i] = rand() % 10 + 1;
+    for (i = 0; i < n; i++)
+        printf("%d  ", a[i]);
+    printf("\nEnter search element: ");
+    scanf("%d", &c);
+    int b = linearSearch(a, c);
+    if (b == -1)
+        printf("Not found Element.");
+    else
+        printf("Element is at %d position found", b);
+}
+
+
+// Circular
+#include <stdio.h>
+#define n 5
+int a[n];
+int f = -1, r = -1, i;
+int display()
+{
+    printf("\n");
+    i = f;
+    if (f < 0)
+        printf("Array is Empty...");
+    else
+    {
+        do
+        {
+            printf("%d ", a[i]);
+            i = (i + 1) % n;
+        } while (i != (r + 1) % n);
+    }
+}
+void insert(int val)
+{
+    if ((r + 1) % n == f)
+        printf("Array is Full....");
+    else if (f == -1)
+    {
+        f = r = 0;
+        a[r] = val;
+    }
+    else
+    {
+        r = (r + 1) % n;
+        a[r] = val;
+    }
+}
+void main()
+{
+     insert(10);
+     insert(20);
+     insert(30);
+     insert(40);
+     insert(50);
+     insert(60);
+    display();
+}
